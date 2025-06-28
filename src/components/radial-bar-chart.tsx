@@ -46,7 +46,6 @@ export const RadialBarChart = ({
           dataKey="value"
           isAnimationActive={false}
           cornerRadius="50%"
-          stackId={'fuck'}
           label={{
             position: 'insideStart',
             fill: computedColorScheme === 'dark' ? theme.white : theme.black,

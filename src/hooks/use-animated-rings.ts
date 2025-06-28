@@ -1,15 +1,11 @@
 import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import duration from 'dayjs/plugin/duration';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { useState, useRef, useEffect } from 'react';
 
 dayjs.extend(duration);
 dayjs.extend(isLeapYear);
-dayjs.extend(advancedFormat);
-dayjs.extend(weekOfYear);
 dayjs.extend(dayOfYear);
 
 export type Ring = { name: string; value: number; color: string };

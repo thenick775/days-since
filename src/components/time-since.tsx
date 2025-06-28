@@ -51,7 +51,7 @@ export const TimeSince = () => {
     <Box
       style={{
         position: 'relative',
-        height: '50%',
+        height: 'clamp(100px,100vw, 400px)',
       }}
     >
       <RadialBarChart data={animatedRings} innerRadius="35%" />

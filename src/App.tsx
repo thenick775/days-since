@@ -9,7 +9,7 @@ import '@mantine/core/styles.css';
 export const App = () => {
   return (
     <>
-      <MantineProvider defaultColorScheme="auto">
+      <MantineProvider defaultColorScheme="dark">
         <DaysSinceApp />
       </MantineProvider>
     </>
