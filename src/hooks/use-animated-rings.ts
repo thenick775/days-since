@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import dayOfYear from 'dayjs/plugin/dayOfYear';
 import duration from 'dayjs/plugin/duration';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import dayOfYear from 'dayjs/plugin/dayOfYear';
 import { useState, useRef, useEffect } from 'react';
 
 dayjs.extend(duration);
@@ -50,12 +50,12 @@ const calculateRings = (originDate: dayjs.Dayjs, now: dayjs.Dayjs) => {
   const year = ((totalDays % daysInYear) / daysInYear) * 100;
 
   const rings = [
-    { name: 'Minute Progress', value: minute, color: 'cyan.5' },
-    { name: 'Hour Progress', value: hour, color: 'teal.5' },
-    { name: 'Day Progress', value: day, color: 'blue.5' },
-    { name: 'Week Progress', value: week, color: 'indigo.5' },
-    { name: 'Month Progress', value: month, color: 'violet.5' },
-    { name: 'Year Progress', value: year, color: 'grape.5' },
+    { name: 'Minute', value: minute, color: 'cyan.5' },
+    { name: 'Hour', value: hour, color: 'teal.5' },
+    { name: 'Day', value: day, color: 'blue.5' },
+    { name: 'Week', value: week, color: 'indigo.5' },
+    { name: 'Month', value: month, color: 'violet.5' },
+    { name: 'Year', value: year, color: 'grape.5' },
   ];
 
   return {

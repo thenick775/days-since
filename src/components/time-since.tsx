@@ -1,14 +1,14 @@
 import { Box, Center, Text } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import dayOfYear from 'dayjs/plugin/dayOfYear';
 import duration from 'dayjs/plugin/duration';
 import isLeapYear from 'dayjs/plugin/isLeapYear';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import dayOfYear from 'dayjs/plugin/dayOfYear';
 
-import { MantineLikeRadialBar } from './m-like-radial-bar';
-import { useAnimatedRings } from '../hooks/use-animated-rings';
+import { RadialBarChart } from './radial-bar-chart.tsx';
+import { useAnimatedRings } from '../hooks/use-animated-rings.ts';
 
 dayjs.extend(duration);
 dayjs.extend(isLeapYear);
@@ -37,7 +37,7 @@ const formatElapsed = ({ days, hours, minutes, seconds }: Elapsed) => {
   return parts.join(', ');
 };
 
-export const TimeProgressRadial = () => {
+export const TimeSince = () => {
   const [origin] = useLocalStorage<string>({
     key: STORAGE_KEY,
     defaultValue: dayjs().toISOString(),
@@ -48,8 +48,13 @@ export const TimeProgressRadial = () => {
   const { animatedRings, elapsed } = useAnimatedRings(originDate);
 
   return (
-    <Box pos="relative" w="90dvw" h="90dvh">
-      <MantineLikeRadialBar data={animatedRings} innerRadius="50%" />
+    <Box
+      style={{
+        position: 'relative',
+        height: '50%',
+      }}
+    >
+      <RadialBarChart data={animatedRings} innerRadius="35%" />
       <Center
         pos="absolute"
         inset={0}
@@ -61,10 +66,13 @@ export const TimeProgressRadial = () => {
           maxHeight: '30%',
         }}
       >
-        <Text fw={700} size="lg" ta="center">
-          {formatElapsed(elapsed)}
+        <Text fw={700} size="md" ta="center">
+          Progress
         </Text>
       </Center>
+      <Text fw={700} size="lg" ta="center" mt="sm">
+        {formatElapsed(elapsed)}
+      </Text>
     </Box>
   );
 };

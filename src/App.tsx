@@ -1,19 +1,17 @@
 import './App.css';
-import { TimeProgressRadial } from './components/radial-chart';
 
 import { MantineProvider } from '@mantine/core';
 
-import '@mantine/core/styles.css';
-import '@mantine/charts/styles.css';
+import { DaysSinceApp } from './components/timer-list.tsx';
 
-function App() {
+import '@mantine/core/styles.css';
+
+export const App = () => {
   return (
     <>
       <MantineProvider defaultColorScheme="auto">
-        <TimeProgressRadial />
+        <DaysSinceApp />
       </MantineProvider>
     </>
   );
-}
-
-export default App;
+};
