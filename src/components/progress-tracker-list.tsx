@@ -19,7 +19,7 @@ import { TbPlus, TbArrowLeft } from 'react-icons/tb';
 import { CreateTimerModal } from './create-timer-modal.tsx';
 import { TimeSince } from './time-since.tsx';
 
-const STORAGE_KEY = 'time-origin-derp-derp';
+const STORAGE_KEY = 'progress-trackers';
 
 type Timer = {
   id: string;
