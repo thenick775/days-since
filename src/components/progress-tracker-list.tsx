@@ -11,44 +11,20 @@ import {
   Button,
   ActionIcon,
 } from '@mantine/core';
-import { useDisclosure, useLocalStorage } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { TbPlus, TbArrowLeft } from 'react-icons/tb';
 
 import { CreateTimerModal } from './create-timer-modal.tsx';
-import { TimeSince } from './time-since.tsx';
-
-const STORAGE_KEY = 'progress-trackers';
-
-type Timer = {
-  id: string;
-  title: string;
-  startedAt: string;
-};
-
-const ProgressTracker = ({ timer }: { timer: Timer }) => (
-  <Container
-    fluid
-    m={1}
-    style={{
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    }}
-  >
-    <Title order={3}>{timer.title}</Title>
-    <TimeSince dateString={timer.startedAt} />
-  </Container>
-);
+import { ProgressTracker } from './progress-tracker.tsx';
+import {
+  useProgressTrackers,
+  type Timer,
+} from '../hooks/use-progress.trackers.ts';
 
 export const ProgressTrackerList = () => {
-  const [timers, setTimers] = useLocalStorage<Timer[]>({
-    key: STORAGE_KEY,
-    defaultValue: [],
-    getInitialValueInEffect: false,
-  });
+  const [timers, setTimers] = useProgressTrackers();
   const [activeTimer, setActiveTimer] = useState<Timer | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 

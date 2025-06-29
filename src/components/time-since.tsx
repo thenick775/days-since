@@ -1,5 +1,4 @@
 import { Box, Center, Text } from '@mantine/core';
-import { DateTimePicker } from '@mantine/dates';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
@@ -44,40 +43,34 @@ export const TimeSince = ({ dateString }: TimeSinceProps) => {
   const { animatedRings, elapsed } = useAnimatedRings(originDate);
 
   return (
-    <Box
-      style={{
-        position: 'relative',
-        height: 'clamp(100px, 100vw, 400px)',
-      }}
-    >
-      <RadialBarChart data={animatedRings} innerRadius="35%" />
-      <Center
-        pos="absolute"
-        inset={0}
+    <Box h="100%">
+      <Box
         style={{
-          pointerEvents: 'none',
-          width: 'fit-content',
-          margin: 'auto',
-          maxWidth: '30%',
-          maxHeight: '30%',
+          position: 'relative',
+          height: 'clamp(100px, 100vw, 400px)',
+          maxHeight: 'fit-content',
         }}
       >
-        <Text fw={700} size="md" ta="center">
-          Progress
-        </Text>
-      </Center>
+        <RadialBarChart data={animatedRings} innerRadius="35%" />
+        <Center
+          pos="absolute"
+          inset={0}
+          style={{
+            pointerEvents: 'none',
+            width: 'fit-content',
+            margin: 'auto',
+            maxWidth: '30%',
+            maxHeight: '30%',
+          }}
+        >
+          <Text fw={700} size="md" ta="center">
+            Progress
+          </Text>
+        </Center>
+      </Box>
       <Text fw={700} size="lg" ta="center" mt="sm">
         {formatElapsed(elapsed)}
       </Text>
-      <DateTimePicker
-        withSeconds
-        label="Start datetime"
-        placeholder="Start datetime"
-        valueFormat="MMM DD YYYY hh:mm:ss A"
-        value={originDate.toDate()}
-        style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
-        mt={'md'}
-      />
     </Box>
   );
 };
