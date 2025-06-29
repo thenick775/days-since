@@ -2,17 +2,15 @@ import './App.css';
 
 import { MantineProvider } from '@mantine/core';
 
-import { DaysSinceApp } from './components/timer-list.tsx';
+import { ProgressTrackerList } from './components/progress-tracker-list.tsx';
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 
 export const App = () => {
   return (
-    <>
-      <MantineProvider defaultColorScheme="dark">
-        <DaysSinceApp />
-      </MantineProvider>
-    </>
+    <MantineProvider defaultColorScheme="dark">
+      <ProgressTrackerList />
+    </MantineProvider>
   );
 };

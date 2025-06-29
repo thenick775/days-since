@@ -27,7 +27,7 @@ type Timer = {
   startedAt: string;
 };
 
-const RadialChartView = ({ tracker }: { tracker: Timer }) => (
+const ProgressTracker = ({ timer }: { timer: Timer }) => (
   <Container
     fluid
     m={1}
@@ -38,21 +38,19 @@ const RadialChartView = ({ tracker }: { tracker: Timer }) => (
       flexDirection: 'column',
     }}
   >
-    <Title order={3}>{tracker.title}</Title>
-    <TimeSince />
+    <Title order={3}>{timer.title}</Title>
+    <TimeSince dateString={timer.startedAt} />
   </Container>
 );
 
-export function DaysSinceApp() {
+export const ProgressTrackerList = () => {
   const [timers, setTimers] = useLocalStorage<Timer[]>({
     key: STORAGE_KEY,
     defaultValue: [],
     getInitialValueInEffect: false,
   });
-  const [activeTracker, setActiveTracker] = useState<Timer | null>(null);
+  const [activeTimer, setActiveTimer] = useState<Timer | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
-
-  console.log('vancise ', timers, setTimers);
 
   return (
     <AppShell
@@ -70,11 +68,11 @@ export function DaysSinceApp() {
       <AppShellHeader p="md" withBorder>
         <Grid align="center">
           <Grid.Col span={1.5}>
-            {activeTracker && (
+            {activeTimer && (
               <ActionIcon
                 aria-label="Back"
                 variant="outline"
-                onClick={() => setActiveTracker(null)}
+                onClick={() => setActiveTimer(null)}
               >
                 <TbArrowLeft size={16} />
               </ActionIcon>
@@ -92,8 +90,8 @@ export function DaysSinceApp() {
       </AppShellHeader>
 
       <AppShellMain>
-        {activeTracker ? (
-          <RadialChartView tracker={activeTracker} />
+        {activeTimer ? (
+          <ProgressTracker timer={activeTimer} />
         ) : (
           <Container
             fluid
@@ -107,7 +105,7 @@ export function DaysSinceApp() {
                   <Card shadow="md" padding="lg" radius="md" withBorder>
                     <Group justify="space-between" mb="xs">
                       <Text fw={500}>{tracker.title}</Text>
-                      <Text size="sm" c="dimmed">
+                      <Text size="md" c="dimmed">
                         Started:{' '}
                         {new Date(tracker.startedAt).toLocaleDateString()}
                       </Text>
@@ -116,7 +114,7 @@ export function DaysSinceApp() {
                       mt="md"
                       fullWidth
                       variant="light"
-                      onClick={() => setActiveTracker(tracker)}
+                      onClick={() => setActiveTimer(tracker)}
                     >
                       View Progress
                     </Button>
@@ -126,7 +124,7 @@ export function DaysSinceApp() {
             </Grid>
           </Container>
         )}
-        {!activeTracker && (
+        {!activeTimer && !opened && (
           <ActionIcon
             aria-label="Add counter"
             variant="filled"
@@ -145,8 +143,7 @@ export function DaysSinceApp() {
         <CreateTimerModal
           opened={opened}
           close={close}
-          onSubmit={(values) => {
-            console.log('vancise onSubmit');
+          onSubmit={(values) =>
             setTimers((prevState) => [
               ...prevState,
               {
@@ -154,10 +151,10 @@ export function DaysSinceApp() {
                 title: values.timerName,
                 startedAt: values.originDateTime.toISOString(),
               },
-            ]);
-          }}
+            ])
+          }
         />
       </AppShellMain>
     </AppShell>
   );
-}
+};

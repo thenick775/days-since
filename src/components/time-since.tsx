@@ -1,6 +1,5 @@
 import { Box, Center, Text } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
-import { useLocalStorage } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
@@ -17,7 +16,9 @@ dayjs.extend(advancedFormat);
 dayjs.extend(weekOfYear);
 dayjs.extend(dayOfYear);
 
-const STORAGE_KEY = 'time-origin';
+type TimeSinceProps = {
+  dateString: string;
+};
 
 type Elapsed = {
   days: number;
@@ -38,14 +39,8 @@ const formatElapsed = ({ days, hours, minutes, seconds }: Elapsed) => {
   return parts.join(', ');
 };
 
-export const TimeSince = () => {
-  const [origin] = useLocalStorage<string>({
-    key: STORAGE_KEY,
-    defaultValue: dayjs().toISOString(),
-    getInitialValueInEffect: false,
-  });
-  const originDate = dayjs(origin);
-
+export const TimeSince = ({ dateString }: TimeSinceProps) => {
+  const originDate = dayjs(dateString);
   const { animatedRings, elapsed } = useAnimatedRings(originDate);
 
   return (

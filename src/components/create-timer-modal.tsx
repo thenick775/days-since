@@ -23,39 +23,48 @@ export const CreateTimerModal = ({
     mode: 'uncontrolled',
     initialValues: {
       timerName: '',
-      originDateTime: dayjs(),
+      originDateTime: dayjs().toDate(),
     },
+    transformValues: (values) => ({
+      ...values,
+      originDateTime: dayjs(values.originDateTime),
+    }),
 
     validate: {
       timerName: (value) => (value ? null : 'Invalid timer name'),
       originDateTime: (value) =>
-        value.isValid() ? null : 'Invalid origin date time',
+        dayjs(value).isValid() ? null : 'Invalid origin date time',
     },
   });
 
   return (
-    <>
-      <Modal opened={opened} onClose={close} title="Create Timer">
-        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-          <TextInput
-            label="Timer name"
-            placeholder="Days Since XXX"
-            {...form.getInputProps('timerName')}
-          />
-          <DateTimePicker
-            withSeconds
-            label="Start datetime"
-            placeholder="Start datetime"
-            valueFormat="MMM DD YYYY hh:mm:ss A"
-            style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
-            mt={'md'}
-            {...form.getInputProps('originDateTime')}
-          />
-          <Group justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
-        </form>
-      </Modal>
-    </>
+    <Modal
+      opened={opened}
+      onClose={close}
+      title="Create Timer"
+      keepMounted={false}
+    >
+      <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+        <TextInput
+          label="Timer name"
+          placeholder="Days Since XXX"
+          size="md"
+          {...form.getInputProps('timerName')}
+        />
+        <DateTimePicker
+          withSeconds
+          label="Start datetime"
+          placeholder="Start datetime"
+          valueFormat="MMM DD YYYY hh:mm:ss A"
+          style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
+          size="md"
+          mt={'md'}
+          {...form.getInputProps('originDateTime')}
+        />
+        <Group justify="flex-end" mt="md">
+          <Button type="submit">Submit</Button>
+        </Group>
+      </form>
+    </Modal>
   );
 };
