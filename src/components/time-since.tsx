@@ -1,4 +1,5 @@
 import { Box, Center, Text } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
 import { useLocalStorage } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -51,7 +52,7 @@ export const TimeSince = () => {
     <Box
       style={{
         position: 'relative',
-        height: 'clamp(100px,100vw, 400px)',
+        height: 'clamp(100px, 100vw, 400px)',
       }}
     >
       <RadialBarChart data={animatedRings} innerRadius="35%" />
@@ -73,6 +74,15 @@ export const TimeSince = () => {
       <Text fw={700} size="lg" ta="center" mt="sm">
         {formatElapsed(elapsed)}
       </Text>
+      <DateTimePicker
+        withSeconds
+        label="Start datetime"
+        placeholder="Start datetime"
+        valueFormat="MMM DD YYYY hh:mm:ss A"
+        value={originDate.toDate()}
+        style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
+        mt={'md'}
+      />
     </Box>
   );
 };

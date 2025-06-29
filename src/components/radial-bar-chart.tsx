@@ -6,13 +6,12 @@ import {
   ResponsiveContainer as ReResponsiveContainer,
 } from 'recharts';
 
-export const RadialBarChart = ({
-  data,
-  innerRadius,
-}: {
+type RadialBarChartProps = {
   data: { name: string; value: number; color: string }[];
   innerRadius: string;
-}) => {
+};
+
+export const RadialBarChart = ({ data, innerRadius }: RadialBarChartProps) => {
   const theme = useMantineTheme();
   const computedColorScheme = useComputedColorScheme();
 

@@ -11,22 +11,21 @@ import {
   Button,
   ActionIcon,
 } from '@mantine/core';
+import { useDisclosure, useLocalStorage } from '@mantine/hooks';
+import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { TbPlus, TbArrowLeft } from 'react-icons/tb';
 
+import { CreateTimerModal } from './create-timer-modal.tsx';
 import { TimeSince } from './time-since.tsx';
+
+const STORAGE_KEY = 'time-origin-derp-derp';
 
 type Timer = {
   id: string;
   title: string;
   startedAt: string;
 };
-
-const mockTrackers: Timer[] = [
-  { id: 'meditation', title: 'Meditation', startedAt: '2024-06-01T08:00:00Z' },
-  { id: 'exercise', title: 'Exercise', startedAt: '2024-06-15T12:00:00Z' },
-  { id: 'no-sugar', title: 'No Sugar', startedAt: '2024-06-20T09:30:00Z' },
-];
 
 const RadialChartView = ({ tracker }: { tracker: Timer }) => (
   <Container
@@ -45,14 +44,21 @@ const RadialChartView = ({ tracker }: { tracker: Timer }) => (
 );
 
 export function DaysSinceApp() {
+  const [timers, setTimers] = useLocalStorage<Timer[]>({
+    key: STORAGE_KEY,
+    defaultValue: [],
+    getInitialValueInEffect: false,
+  });
   const [activeTracker, setActiveTracker] = useState<Timer | null>(null);
+  const [opened, { open, close }] = useDisclosure(false);
+
+  console.log('vancise ', timers, setTimers);
 
   return (
     <AppShell
-      mt="md"
+      pt="md"
       header={{ height: 60 }}
       styles={{
-        root: { height: '100%' },
         main: {
           display: 'flex',
           flexDirection: 'column',
@@ -96,16 +102,16 @@ export function DaysSinceApp() {
             style={{ overflowY: 'auto', flexGrow: 1 }}
           >
             <Grid>
-              {mockTrackers.map((tracker) => (
+              {timers.map((tracker) => (
                 <Grid.Col key={tracker.id} span={{ base: 12, sm: 6, md: 4 }}>
                   <Card shadow="md" padding="lg" radius="md" withBorder>
                     <Group justify="space-between" mb="xs">
                       <Text fw={500}>{tracker.title}</Text>
+                      <Text size="sm" c="dimmed">
+                        Started:{' '}
+                        {new Date(tracker.startedAt).toLocaleDateString()}
+                      </Text>
                     </Group>
-                    <Text size="sm" c="dimmed">
-                      Started:{' '}
-                      {new Date(tracker.startedAt).toLocaleDateString()}
-                    </Text>
                     <Button
                       mt="md"
                       fullWidth
@@ -131,11 +137,26 @@ export function DaysSinceApp() {
               right: 16,
               zIndex: 1000,
             }}
-            onClick={() => {}}
+            onClick={open}
           >
             <TbPlus size={25} />
           </ActionIcon>
         )}
+        <CreateTimerModal
+          opened={opened}
+          close={close}
+          onSubmit={(values) => {
+            console.log('vancise onSubmit');
+            setTimers((prevState) => [
+              ...prevState,
+              {
+                id: nanoid(),
+                title: values.timerName,
+                startedAt: values.originDateTime.toISOString(),
+              },
+            ]);
+          }}
+        />
       </AppShellMain>
     </AppShell>
   );
