@@ -4,9 +4,9 @@ import dayjs from 'dayjs';
 
 import { TimeSince } from './time-since.tsx';
 
-import type { Timer } from '../hooks/use-progress.trackers.ts';
+import type { Tracker } from '../hooks/use-progress.trackers.ts';
 
-export const ProgressTracker = ({ timer }: { timer: Timer }) => (
+export const ProgressTracker = ({ tracker }: { tracker: Tracker }) => (
   <Container
     fluid
     m={1}
@@ -17,14 +17,14 @@ export const ProgressTracker = ({ timer }: { timer: Timer }) => (
       flexDirection: 'column',
     }}
   >
-    <Title order={3}>{timer.title}</Title>
-    <TimeSince dateString={timer.startedAt} />
+    <Title order={3}>{tracker.title}</Title>
+    <TimeSince dateString={tracker.startedAt} />
     <DateTimePicker
       withSeconds
       label="Start datetime"
       placeholder="Start datetime"
       valueFormat="MMM DD YYYY hh:mm:ss A"
-      value={dayjs(timer.startedAt).toDate()}
+      value={dayjs(tracker.startedAt).toDate()}
       style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
       mt="md"
       w="100%"

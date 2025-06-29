@@ -16,16 +16,16 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { TbPlus, TbArrowLeft } from 'react-icons/tb';
 
-import { CreateTimerModal } from './create-timer-modal.tsx';
+import { CreateTrackerModal } from './create-tracker-modal.tsx';
 import { ProgressTracker } from './progress-tracker.tsx';
 import {
   useProgressTrackers,
-  type Timer,
+  type Tracker,
 } from '../hooks/use-progress.trackers.ts';
 
 export const ProgressTrackerList = () => {
-  const [timers, setTimers] = useProgressTrackers();
-  const [activeTimer, setActiveTimer] = useState<Timer | null>(null);
+  const [trackers, setTrackers] = useProgressTrackers();
+  const [activeTracker, setActiveTracker] = useState<Tracker | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -44,11 +44,11 @@ export const ProgressTrackerList = () => {
       <AppShellHeader p="md" withBorder>
         <Grid align="center">
           <Grid.Col span={1.5}>
-            {activeTimer && (
+            {activeTracker && (
               <ActionIcon
                 aria-label="Back"
                 variant="outline"
-                onClick={() => setActiveTimer(null)}
+                onClick={() => setActiveTracker(null)}
               >
                 <TbArrowLeft size={16} />
               </ActionIcon>
@@ -66,8 +66,8 @@ export const ProgressTrackerList = () => {
       </AppShellHeader>
 
       <AppShellMain>
-        {activeTimer ? (
-          <ProgressTracker timer={activeTimer} />
+        {activeTracker ? (
+          <ProgressTracker tracker={activeTracker} />
         ) : (
           <Container
             fluid
@@ -76,7 +76,7 @@ export const ProgressTrackerList = () => {
             style={{ overflowY: 'auto', flexGrow: 1 }}
           >
             <Grid>
-              {timers.map((tracker) => (
+              {trackers.map((tracker) => (
                 <Grid.Col key={tracker.id} span={{ base: 12, sm: 6, md: 4 }}>
                   <Card shadow="md" padding="lg" radius="md" withBorder>
                     <Group justify="space-between" mb="xs">
@@ -90,7 +90,7 @@ export const ProgressTrackerList = () => {
                       mt="md"
                       fullWidth
                       variant="light"
-                      onClick={() => setActiveTimer(tracker)}
+                      onClick={() => setActiveTracker(tracker)}
                     >
                       View Progress
                     </Button>
@@ -100,7 +100,7 @@ export const ProgressTrackerList = () => {
             </Grid>
           </Container>
         )}
-        {!activeTimer && !opened && (
+        {!activeTracker && !opened && (
           <ActionIcon
             aria-label="Add counter"
             variant="filled"
@@ -116,15 +116,15 @@ export const ProgressTrackerList = () => {
             <TbPlus size={25} />
           </ActionIcon>
         )}
-        <CreateTimerModal
+        <CreateTrackerModal
           opened={opened}
           close={close}
           onSubmit={(values) =>
-            setTimers((prevState) => [
+            setTrackers((prevState) => [
               ...prevState,
               {
                 id: nanoid(),
-                title: values.timerName,
+                title: values.trackerName,
                 startedAt: values.originDateTime.toISOString(),
               },
             ])

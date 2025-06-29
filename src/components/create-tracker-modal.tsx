@@ -3,26 +3,26 @@ import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import dayjs from 'dayjs';
 
-type CreateTimerFormFields = {
-  timerName: string;
+type CreateTrackerFormFields = {
+  trackerName: string;
   originDateTime: dayjs.Dayjs;
 };
 
-type CreateTimerModalProps = {
+type CreateTrackerModalProps = {
   opened: boolean;
   close: () => void;
-  onSubmit: (formValues: CreateTimerFormFields) => void;
+  onSubmit: (formValues: CreateTrackerFormFields) => void;
 };
 
-export const CreateTimerModal = ({
+export const CreateTrackerModal = ({
   opened,
   close,
   onSubmit,
-}: CreateTimerModalProps) => {
+}: CreateTrackerModalProps) => {
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
-      timerName: '',
+      trackerName: '',
       originDateTime: dayjs().toDate(),
     },
     transformValues: (values) => ({
@@ -31,7 +31,7 @@ export const CreateTimerModal = ({
     }),
 
     validate: {
-      timerName: (value) => (value ? null : 'Invalid timer name'),
+      trackerName: (value) => (value ? null : 'Invalid tracker name'),
       originDateTime: (value) =>
         dayjs(value).isValid() ? null : 'Invalid origin date time',
     },
@@ -41,15 +41,15 @@ export const CreateTimerModal = ({
     <Modal
       opened={opened}
       onClose={close}
-      title="Create Timer"
+      title="Create Tracker"
       keepMounted={false}
     >
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <TextInput
-          label="Timer name"
+          label="Tracker name"
           placeholder="Days Since XXX"
           size="md"
-          {...form.getInputProps('timerName')}
+          {...form.getInputProps('trackerName')}
         />
         <DateTimePicker
           withSeconds

@@ -7,10 +7,8 @@ import { ProgressTrackerList } from './components/progress-tracker-list.tsx';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 
-export const App = () => {
-  return (
-    <MantineProvider defaultColorScheme="dark">
-      <ProgressTrackerList />
-    </MantineProvider>
-  );
-};
+export const App = () => (
+  <MantineProvider defaultColorScheme="dark">
+    <ProgressTrackerList />
+  </MantineProvider>
+);
