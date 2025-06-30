@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/days-since.svg"
   },
   "dependencies": {
     "@mantine/core": "^8.1.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@prefresh/vite": "^2.4.8",
+    "@vite-pwa/assets-generator": "^1.0.0",
     "eslint": "^9.25.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
