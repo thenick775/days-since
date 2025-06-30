@@ -89,12 +89,7 @@ export const ProgressTrackerList = () => {
             updateIsoDateString={updateDateString}
           />
         ) : (
-          <Container
-            fluid
-            size="lg"
-            mt="md"
-            style={{ overflowY: 'auto', flexGrow: 1 }}
-          >
+          <Container fluid size="lg" mt="md" w="100%">
             <Grid>
               {trackers.map((tracker) => (
                 <Grid.Col key={tracker.id} span={{ base: 12, sm: 6, md: 4 }}>

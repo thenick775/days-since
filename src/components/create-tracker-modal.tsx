@@ -14,11 +14,11 @@ type CreateTrackerModalProps = {
   onSubmit: (formValues: CreateTrackerFormFields) => void;
 };
 
-export const CreateTrackerModal = ({
-  opened,
-  close,
-  onSubmit,
-}: CreateTrackerModalProps) => {
+type TrackerFormProps = {
+  onSubmit: (formValues: CreateTrackerFormFields) => void;
+};
+
+const TrackerForm = ({ onSubmit }: TrackerFormProps) => {
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -38,33 +38,46 @@ export const CreateTrackerModal = ({
   });
 
   return (
-    <Modal
-      opened={opened}
-      onClose={close}
-      title="Create Tracker"
-      keepMounted={false}
+    <form
+      onSubmit={form.onSubmit((values) => {
+        onSubmit(values);
+        close();
+      })}
     >
-      <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-        <TextInput
-          label="Tracker name"
-          placeholder="Days Since XXX"
-          size="md"
-          {...form.getInputProps('trackerName')}
-        />
-        <DateTimePicker
-          withSeconds
-          label="Start datetime"
-          placeholder="Start datetime"
-          valueFormat="MMM DD YYYY hh:mm:ss A"
-          style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
-          size="md"
-          mt="md"
-          {...form.getInputProps('originDateTime')}
-        />
-        <Group justify="flex-end" mt="md">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </Modal>
+      <TextInput
+        label="Tracker name"
+        placeholder="Days Since XXX"
+        size="md"
+        {...form.getInputProps('trackerName')}
+      />
+      <DateTimePicker
+        withSeconds
+        label="Start datetime"
+        placeholder="Start datetime"
+        valueFormat="MMM DD YYYY hh:mm:ss A"
+        style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
+        size="md"
+        mt="md"
+        {...form.getInputProps('originDateTime')}
+      />
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
   );
 };
+
+export const CreateTrackerModal = ({
+  opened,
+  close,
+  onSubmit,
+}: CreateTrackerModalProps) => (
+  <Modal
+    opened={opened}
+    onClose={close}
+    title="Create Tracker"
+    keepMounted={false}
+  >
+    <TrackerForm onSubmit={onSubmit} />
+  </Modal>
+);
