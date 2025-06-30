@@ -15,7 +15,7 @@ import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import { TbPlus, TbArrowLeft } from 'react-icons/tb';
+import { TbPlus, TbArrowLeft, TbX } from 'react-icons/tb';
 
 import { CreateTrackerModal } from './create-tracker-modal.tsx';
 import { ProgressTracker } from './progress-tracker.tsx';
@@ -46,7 +46,12 @@ export const ProgressTrackerList = () => {
       return [...prevState.filter((tracker) => tracker.id !== id), newTracker];
     });
 
-  const activeTracker = trackers.find(
+  const deleteTracker = (id: string) =>
+    setTrackers((prevState) =>
+      prevState.filter((tracker) => tracker.id !== id)
+    );
+
+  const activeTracker = trackers?.find(
     (tracker) => tracker.id === activeTrackerId
   );
 
@@ -101,11 +106,23 @@ export const ProgressTrackerList = () => {
                   <Card shadow="md" padding="lg" radius="md" withBorder>
                     <Group justify="space-between" mb="xs">
                       <Text fw={500}>{tracker.title}</Text>
-                      <Text size="md" c="dimmed">
-                        Started:{' '}
-                        {new Date(tracker.startedAt).toLocaleDateString()}
-                      </Text>
+
+                      <ActionIcon
+                        size="sm"
+                        variant="subtle"
+                        color="red"
+                        aria-label="Delete tracker"
+                        onClick={() => deleteTracker(tracker.id)}
+                      >
+                        <TbX size={18} />
+                      </ActionIcon>
                     </Group>
+
+                    <Text size="sm" c="dimmed" style={{ textAlign: 'left' }}>
+                      Started:{' '}
+                      {new Date(tracker.startedAt).toLocaleDateString()}
+                    </Text>
+
                     <Button
                       mt="md"
                       fullWidth

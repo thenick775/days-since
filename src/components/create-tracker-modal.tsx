@@ -15,10 +15,11 @@ type CreateTrackerModalProps = {
 };
 
 type TrackerFormProps = {
+  close: () => void;
   onSubmit: (formValues: CreateTrackerFormFields) => void;
 };
 
-const TrackerForm = ({ onSubmit }: TrackerFormProps) => {
+const TrackerForm = ({ onSubmit, close }: TrackerFormProps) => {
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -78,6 +79,6 @@ export const CreateTrackerModal = ({
     title="Create Tracker"
     keepMounted={false}
   >
-    <TrackerForm onSubmit={onSubmit} />
+    <TrackerForm onSubmit={onSubmit} close={close} />
   </Modal>
 );
