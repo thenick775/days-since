@@ -12,6 +12,7 @@ import {
   ActionIcon,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { TbPlus, TbArrowLeft } from 'react-icons/tb';
@@ -24,7 +25,11 @@ import {
 } from '../hooks/use-progress.trackers.ts';
 
 export const ProgressTrackerList = () => {
-  const [trackers, setTrackers] = useProgressTrackers();
+  const [trackers, setTrackers] = useProgressTrackers({
+    id: nanoid(),
+    title: 'First Visit',
+    startedAt: dayjs().toISOString(),
+  });
   const [activeTrackerId, setActiveTrackerId] = useState<Tracker['id'] | null>(
     null
   );

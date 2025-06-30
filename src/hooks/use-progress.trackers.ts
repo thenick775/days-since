@@ -8,9 +8,9 @@ export type Tracker = {
   startedAt: string;
 };
 
-export const useProgressTrackers = () =>
+export const useProgressTrackers = (defaultTracker: Tracker) =>
   useLocalStorage<Tracker[]>({
     key: STORAGE_KEY,
-    defaultValue: [],
+    defaultValue: [defaultTracker],
     getInitialValueInEffect: false,
   });
