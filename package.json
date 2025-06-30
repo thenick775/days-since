@@ -15,7 +15,6 @@
     "@mantine/dates": "^8.1.2",
     "@mantine/form": "^8.1.2",
     "@mantine/hooks": "^8.1.2",
-    "@prefresh/vite": "^2.4.8",
     "dayjs": "^1.11.13",
     "nanoid": "^5.1.5",
     "preact": "^10.26.9",
@@ -25,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@prefresh/vite": "^2.4.8",
     "eslint": "^9.25.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
