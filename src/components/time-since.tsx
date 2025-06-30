@@ -20,15 +20,17 @@ type TimeSinceProps = {
 };
 
 type Elapsed = {
+  years: number;
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
 };
 
-const formatElapsed = ({ days, hours, minutes, seconds }: Elapsed) => {
+const formatElapsed = ({ years, days, hours, minutes, seconds }: Elapsed) => {
   const parts: string[] = [];
 
+  if (years) parts.push(`${years} ${years === 1 ? 'year' : 'years'}`);
   if (days) parts.push(`${days} ${days === 1 ? 'day' : 'days'}`);
   if (hours) parts.push(`${hours} ${hours === 1 ? 'hour' : 'hours'}`);
   if (minutes) parts.push(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`);
@@ -51,7 +53,7 @@ export const TimeSince = ({ dateString }: TimeSinceProps) => {
           maxHeight: 'fit-content',
         }}
       >
-        <RadialBarChart data={animatedRings} innerRadius="35%" />
+        <RadialBarChart data={animatedRings} innerRadius="30%" />
         <Center
           pos="absolute"
           inset={0}

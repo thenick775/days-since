@@ -1,4 +1,5 @@
 import { useComputedColorScheme, useMantineTheme } from '@mantine/core';
+import { isSafari } from 'react-device-detect';
 import {
   RadialBarChart as ReRadialBarChart,
   RadialBar as ReRadialBar,
@@ -49,6 +50,8 @@ export const RadialBarChart = ({ data, innerRadius }: RadialBarChartProps) => {
             position: 'insideStart',
             fill: computedColorScheme === 'dark' ? theme.white : theme.black,
             dataKey: 'name',
+            // issue in webkit, recharts text positioning is off center
+            transform: isSafari ? 'translate(0 5)' : undefined,
           }}
         />
       </ReRadialBarChart>

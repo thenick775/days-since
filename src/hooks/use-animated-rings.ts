@@ -10,6 +10,7 @@ dayjs.extend(dayOfYear);
 
 export type Ring = { name: string; value: number; color: string };
 export type Elapsed = {
+  years: number;
   days: number;
   hours: number;
   minutes: number;
@@ -23,8 +24,10 @@ const calculateRings = (originDate: dayjs.Dayjs, now: dayjs.Dayjs) => {
   const totalMinutes = diffDuration.asMinutes();
   const totalHours = diffDuration.asHours();
   const totalDays = diffDuration.asDays();
+  const totalYears = diffDuration.asYears();
 
-  const days = Math.floor(totalDays);
+  const years = Math.floor(totalYears);
+  const days = Math.floor(totalDays) % 365;
   const hours = Math.floor(totalHours) % 24;
   const minutes = Math.floor(totalMinutes) % 60;
   const seconds = Math.floor(totalSeconds) % 60;
@@ -56,7 +59,7 @@ const calculateRings = (originDate: dayjs.Dayjs, now: dayjs.Dayjs) => {
 
   return {
     rings,
-    elapsed: { days, hours, minutes, seconds },
+    elapsed: { years, days, hours, minutes, seconds },
   };
 };
 
@@ -65,6 +68,7 @@ const areRingsEqual = (a: Ring[], b: Ring[]) =>
   a.every((r, i) => Math.abs(r.value - b[i].value) < 0.01);
 
 const isElapsedEqual = (a: Elapsed, b: Elapsed) =>
+  a.years === b.years &&
   a.days === b.days &&
   a.hours === b.hours &&
   a.minutes === b.minutes &&
@@ -73,6 +77,7 @@ const isElapsedEqual = (a: Elapsed, b: Elapsed) =>
 export const useAnimatedRings = (originDate: dayjs.Dayjs | null) => {
   const [animatedRings, setAnimatedRings] = useState<Ring[]>([]);
   const [elapsed, setElapsed] = useState<Elapsed>({
+    years: 0,
     days: 0,
     hours: 0,
     minutes: 0,
@@ -81,6 +86,7 @@ export const useAnimatedRings = (originDate: dayjs.Dayjs | null) => {
 
   const prevRingsRef = useRef<Ring[]>([]);
   const prevElapsedRef = useRef<Elapsed>({
+    years: 0,
     days: 0,
     hours: 0,
     minutes: 0,

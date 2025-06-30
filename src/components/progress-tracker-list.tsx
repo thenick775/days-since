@@ -25,8 +25,25 @@ import {
 
 export const ProgressTrackerList = () => {
   const [trackers, setTrackers] = useProgressTrackers();
-  const [activeTracker, setActiveTracker] = useState<Tracker | null>(null);
+  const [activeTrackerId, setActiveTrackerId] = useState<Tracker['id'] | null>(
+    null
+  );
   const [opened, { open, close }] = useDisclosure(false);
+
+  const updateDateString = (id: string, dateString: string) =>
+    setTrackers((prevState) => {
+      const tracker = prevState.find((tracker) => tracker.id === id);
+
+      if (!tracker) return prevState;
+
+      const newTracker: Tracker = { ...tracker, startedAt: dateString };
+
+      return [...prevState.filter((tracker) => tracker.id !== id), newTracker];
+    });
+
+  const activeTracker = trackers.find(
+    (tracker) => tracker.id === activeTrackerId
+  );
 
   return (
     <AppShell
@@ -44,11 +61,11 @@ export const ProgressTrackerList = () => {
       <AppShellHeader p="md" withBorder>
         <Grid align="center">
           <Grid.Col span={1.5}>
-            {activeTracker && (
+            {activeTrackerId && (
               <ActionIcon
                 aria-label="Back"
                 variant="outline"
-                onClick={() => setActiveTracker(null)}
+                onClick={() => setActiveTrackerId(null)}
               >
                 <TbArrowLeft size={16} />
               </ActionIcon>
@@ -67,7 +84,10 @@ export const ProgressTrackerList = () => {
 
       <AppShellMain>
         {activeTracker ? (
-          <ProgressTracker tracker={activeTracker} />
+          <ProgressTracker
+            tracker={activeTracker}
+            updateIsoDateString={updateDateString}
+          />
         ) : (
           <Container
             fluid
@@ -90,7 +110,7 @@ export const ProgressTrackerList = () => {
                       mt="md"
                       fullWidth
                       variant="light"
-                      onClick={() => setActiveTracker(tracker)}
+                      onClick={() => setActiveTrackerId(tracker.id)}
                     >
                       View Progress
                     </Button>
@@ -100,7 +120,7 @@ export const ProgressTrackerList = () => {
             </Grid>
           </Container>
         )}
-        {!activeTracker && !opened && (
+        {!activeTrackerId && !opened && (
           <ActionIcon
             aria-label="Add counter"
             variant="filled"

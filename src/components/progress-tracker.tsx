@@ -6,7 +6,13 @@ import { TimeSince } from './time-since.tsx';
 
 import type { Tracker } from '../hooks/use-progress.trackers.ts';
 
-export const ProgressTracker = ({ tracker }: { tracker: Tracker }) => (
+export const ProgressTracker = ({
+  tracker,
+  updateIsoDateString,
+}: {
+  tracker: Tracker;
+  updateIsoDateString: (id: string, dateString: string) => void;
+}) => (
   <Container
     fluid
     m={1}
@@ -28,6 +34,11 @@ export const ProgressTracker = ({ tracker }: { tracker: Tracker }) => (
       style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
       mt="md"
       w="100%"
+      size="md"
+      onChange={(dateString) => {
+        if (dateString)
+          updateIsoDateString(tracker.id, dayjs(dateString).toISOString());
+      }}
     />
   </Container>
 );

@@ -58,7 +58,7 @@ export const CreateTrackerModal = ({
           valueFormat="MMM DD YYYY hh:mm:ss A"
           style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
           size="md"
-          mt={'md'}
+          mt="md"
           {...form.getInputProps('originDateTime')}
         />
         <Group justify="flex-end" mt="md">
