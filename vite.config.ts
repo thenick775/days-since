@@ -13,6 +13,11 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
+        name: 'Days Since',
+        short_name: 'days-since',
+        description: 'A web app that visualizes time passed since any event',
+        background_color: '#141414',
+        theme_color: '#242424',
         icons: [
           {
             src: 'pwa-64x64.png',
@@ -34,6 +39,22 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
+          },
+        ],
+        screenshots: [
+          {
+            src: 'desktop.png',
+            sizes: '944x900',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'Desktop Days Since',
+          },
+          {
+            src: 'mobile.png',
+            sizes: '1170x2532',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'Mobile Days Since',
           },
         ],
       },
