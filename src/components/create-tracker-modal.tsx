@@ -59,6 +59,7 @@ const TrackerForm = ({ onSubmit, close }: TrackerFormProps) => {
         style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'left' }}
         size="md"
         mt="md"
+        dropdownType="modal"
         {...form.getInputProps('originDateTime')}
       />
       <Group justify="flex-end" mt="md">

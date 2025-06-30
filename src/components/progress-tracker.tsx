@@ -35,6 +35,7 @@ export const ProgressTracker = ({
       mt="md"
       w="100%"
       size="md"
+      dropdownType="modal"
       onChange={(dateString) => {
         if (dateString)
           updateIsoDateString(tracker.id, dayjs(dateString).toISOString());
