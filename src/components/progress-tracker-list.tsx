@@ -2,8 +2,8 @@ import {
   AppShell,
   AppShellHeader,
   AppShellMain,
+  ScrollArea,
   Title,
-  Container,
   Grid,
   Card,
   Group,
@@ -51,24 +51,13 @@ export const ProgressTrackerList = () => {
       prevState.filter((tracker) => tracker.id !== id)
     );
 
-  const activeTracker = trackers?.find(
+  const activeTracker = trackers.find(
     (tracker) => tracker.id === activeTrackerId
   );
 
   return (
-    <AppShell
-      pt="md"
-      header={{ height: 60 }}
-      styles={{
-        main: {
-          display: 'flex',
-          flexDirection: 'column',
-          height: `100%`,
-          overflow: 'hidden',
-        },
-      }}
-    >
-      <AppShellHeader p="md" withBorder>
+    <AppShell header={{ height: 60 }}>
+      <AppShellHeader p="sm" withBorder>
         <Grid align="center">
           <Grid.Col span={1.5}>
             {activeTrackerId && (
@@ -99,8 +88,16 @@ export const ProgressTrackerList = () => {
             updateIsoDateString={updateDateString}
           />
         ) : (
-          <Container fluid size="lg" mt="md" w="100%">
-            <Grid>
+          <ScrollArea
+            style={{
+              height: 'calc(100dvh - var(--mantine-header-height, 0px) - 60px)',
+            }}
+            px="md"
+            pb="lg"
+            scrollbarSize={8}
+            scrollbars="y"
+          >
+            <Grid gutter="lg" pt={'sm'}>
               {trackers.map((tracker) => (
                 <Grid.Col key={tracker.id} span={{ base: 12, sm: 6, md: 4 }}>
                   <Card shadow="md" padding="lg" radius="md" withBorder>
@@ -118,7 +115,7 @@ export const ProgressTrackerList = () => {
                       </ActionIcon>
                     </Group>
 
-                    <Text size="sm" c="dimmed" style={{ textAlign: 'left' }}>
+                    <Text size="sm" c="dimmed" ta="left">
                       Started:{' '}
                       {new Date(tracker.startedAt).toLocaleDateString()}
                     </Text>
@@ -135,24 +132,25 @@ export const ProgressTrackerList = () => {
                 </Grid.Col>
               ))}
             </Grid>
-          </Container>
+          </ScrollArea>
         )}
+
         {!activeTrackerId && !opened && (
           <ActionIcon
-            aria-label="Add counter"
+            aria-label="Add tracker"
             variant="filled"
             pos="absolute"
             size="xl"
             style={{
               bottom: 24,
-              right: 16,
-              zIndex: 1000,
+              right: 8,
             }}
             onClick={open}
           >
             <TbPlus size={25} />
           </ActionIcon>
         )}
+
         <CreateTrackerModal
           opened={opened}
           close={close}
