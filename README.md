@@ -4,7 +4,7 @@ Days since, a web app that visualizes time passed since any event
 
 <img src="./readme-graphics/demo2.gif" alt="demo" width="400px">
 
-No tracking, ads, free forever 🚀
+Privacy first, no ads, free forever 🚀
 
 [Try it live!](https://days-since.dev)
 
