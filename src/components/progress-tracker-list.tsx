@@ -31,7 +31,7 @@ export const ProgressTrackerList = () => {
     startedAt: dayjs().toISOString(),
   });
   const [activeTrackerId, setActiveTrackerId] = useState<Tracker['id'] | null>(
-    null
+    null,
   );
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -48,11 +48,11 @@ export const ProgressTrackerList = () => {
 
   const deleteTracker = (id: string) =>
     setTrackers((prevState) =>
-      prevState.filter((tracker) => tracker.id !== id)
+      prevState.filter((tracker) => tracker.id !== id),
     );
 
   const activeTracker = trackers.find(
-    (tracker) => tracker.id === activeTrackerId
+    (tracker) => tracker.id === activeTrackerId,
   );
 
   return (
@@ -65,6 +65,9 @@ export const ProgressTrackerList = () => {
                 aria-label="Back"
                 variant="outline"
                 onClick={() => setActiveTrackerId(null)}
+                onPointerUp={(e) => {
+                  if (e.pointerType === 'touch') setActiveTrackerId(null);
+                }}
               >
                 <TbArrowLeft size={16} />
               </ActionIcon>
